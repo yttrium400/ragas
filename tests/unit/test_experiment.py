@@ -13,6 +13,11 @@ from ragas.dataset import Dataset
 from ragas.experiment import Experiment, experiment, version_experiment
 from ragas.utils import find_git_root, memorable_names
 
+try:
+    import git
+except ImportError:
+    git = None
+
 
 # Test data models
 class SampleDataRow(BaseModel):
@@ -105,6 +110,7 @@ class TestExperiment:
         assert len(experiment) == 0
 
 
+@pytest.mark.skipif(git is None, reason="GitPython not installed")
 class TestVersionExperiment:
     """Test the version_experiment function."""
 
