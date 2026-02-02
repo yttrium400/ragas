@@ -117,9 +117,9 @@ def create_metric_decorator():
                 allowed_values = ["pass", "fail"]
             validator_class = get_validator_for_allowed_values(allowed_values)
 
-            @dataclass(repr=False, kw_only=True)
+            @dataclass(repr=False)
             class CustomMetric(SimpleBaseMetric, validator_class):
-                _func: t.Callable[..., t.Any]
+                _func: t.Callable[..., t.Any] = field(default=None)
                 _metric_params: t.Dict[str, t.Any] = field(default_factory=dict)
                 # Note: allowed_values is inherited from SimpleBaseMetric
 
